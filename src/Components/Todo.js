@@ -1,41 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { input } from '../Modules/Todo-Module';
 import { addItem } from '../Modules/Todo-Module';
-
-
-const mapStateToProps = (state) =>{
-	return {
-		list: state.todo.list,
-		temp: state.todo.temp
-	}
-}
 
 const mapDispatchToProps = (dispatch) =>{
 	return {
-		input: (payload) =>{
-			dispatch(input(payload))
-		},
-		addItem: () => {
-			dispatch(addItem())
+		addItem: (payload) =>{
+			dispatch(addItem(payload))
 		}
+	}
+}
+const mapStateToProps = (state) =>{
+	return {
+		list: state.todo.list
 	}
 }
 
 class Todo extends Component{
-	handleChange = (ev) => {
-		ev.preventDefault();
-		this.props.input(ev.target.value);
+	constructor(){
+	super()
+		this.state = {
+			temp:''
+		}
 	}
 
-	handleClick = (ev) => {
-		ev.preventDefault();
-		this.props.addItem()
+	handleChange = (event) => {
+		event.preventDefault();
+		this.setState({ temp: event.target.value })
 	}
 
+	handleClick = (event) => {
+		event.preventDefault();
+		this.props.addItem(this.state.temp);
+	}
+ 	
 	render() {
 		return(
-			<section>
+			<section style={styles.container}>
 				<form>
 					<input type='text' onChange={this.handleChange}/>
 					<button onClick={this.handleClick}>send</button>
@@ -47,4 +47,16 @@ class Todo extends Component{
 		)
 	}
 }
-export default connect( mapStateToProps, mapDispatchToProps) (Todo);
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 200
+  },
+  containerUlLi: {
+  	listStyle: 'none'
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (Todo);

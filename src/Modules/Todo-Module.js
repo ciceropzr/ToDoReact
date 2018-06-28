@@ -1,23 +1,15 @@
-//todo(projeto)/todo(modulo)/ADDITEM(nome de onde estou mechendo)
-const INPUT = 'todo/todo/INPUT'
 const ADDITEM = 'todo/todo/ADDITEM'
 
 const	initialState = {
-	list: [],
-	temp: ''
+	list: []
 }
 
 const todoReducer = (state = initialState, action) => {
 	switch (action.type){
-		case INPUT:
-			return {	
-				...state,
-				temp: action.payload
-			}
 		case ADDITEM:
 			return {
 				...state,
-				list: state.list.concat([state.temp])
+				list: state.list.concat([action.info])
 			}
 		default:
 		return state;
@@ -26,18 +18,7 @@ const todoReducer = (state = initialState, action) => {
 
 export default todoReducer
 
-export const input = (payload) => ({
-		type: INPUT,
-		payload
+export const addItem = (info) => ({
+		type: ADDITEM,
+		info
 })
-
-export const addItem = () => ({
-		type: ADDITEM
-})
-// //a msm coisa que a cima
-// export const addItem = (payload) => {
-// 	return{
-// 		type: ADDITEM,
-// 		payload: payload
-// 	}
-// }
